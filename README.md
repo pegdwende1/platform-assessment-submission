@@ -76,13 +76,26 @@ Standard Kubernetes Deployments do rolling updates that are hard to observe and 
 
 ### Why Environment Approval Gates?
 
-GitHub Environments with required reviewers create a human checkpoint between automated stages:
+GitHub Environments with required reviewers create a human checkpoint between automated stages. It's important to understand what's actually being approved in a GitOps model:
 
 ```
-Build & Scan → [⏸️ Staging Approval] → Deploy Staging → [⏸️ Production Approval] → Deploy Production
+Build & Scan → [⏸️ Staging Approval] → Update values-staging.yaml → ArgoCD auto-syncs
+                                                                           ↓
+                                        [⏸️ Production Approval] → Update values-production.yaml → QA clicks Sync in ArgoCD
 ```
 
-This gives QA engineers control over what ships and when, without needing kubectl access or deep Kubernetes knowledge.
+**What the GitHub approval controls:** whether the image tag gets committed to the Helm values file. It gates the *intent to deploy*, not the deployment itself.
+
+**What ArgoCD controls:** the actual cluster state change. For staging, ArgoCD auto-syncs (deploys immediately when values change). For production, ArgoCD requires a manual Sync action — this is the second approval layer.
+
+| Gate | Controls | Who approves |
+|------|----------|--------------|
+| GitHub Environment (staging) | Writing image tag to `values-staging.yaml` | CI reviewer |
+| ArgoCD auto-sync (staging) | Deploying to staging cluster | Automatic |
+| GitHub Environment (production) | Writing image tag to `values-production.yaml` | Engineering lead |
+| ArgoCD manual Sync (production) | Deploying to production cluster | QA engineer via ArgoCD UI |
+
+This two-layer approach means production requires both "yes, this image is ready" (GitHub) AND "yes, deploy it now" (ArgoCD). QA controls the timing of the actual deployment without needing kubectl access.
 
 ### Why Dual Container Scanners (Trivy + Grype)?
 
