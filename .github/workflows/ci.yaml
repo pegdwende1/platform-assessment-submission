@@ -236,6 +236,7 @@ jobs:
           artifact-name: sbom-cyclonedx
 
       - name: Upload SBOM to Dependency-Track
+        if: env.DTRACK_URL != ''
         env:
           DTRACK_URL: ${{ secrets.DEPENDENCY_TRACK_URL }}
           DTRACK_API_KEY: ${{ secrets.DEPENDENCY_TRACK_API_KEY }}
@@ -264,6 +265,7 @@ jobs:
           echo "Token: $BODY"
 
       - name: Wait for Dependency-Track analysis
+        if: env.DTRACK_URL != ''
         env:
           DTRACK_URL: ${{ secrets.DEPENDENCY_TRACK_URL }}
           DTRACK_API_KEY: ${{ secrets.DEPENDENCY_TRACK_API_KEY }}
