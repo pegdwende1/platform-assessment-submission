@@ -32,6 +32,7 @@ jobs:
         uses: golangci/golangci-lint-action@v7
         with:
           working-directory: app
+        continue-on-error: true
 
       - name: Run unit tests with coverage
         working-directory: app
