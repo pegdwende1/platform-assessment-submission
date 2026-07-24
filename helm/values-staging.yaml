@@ -1,6 +1,6 @@
 # Staging environment overrides
 image:
-  tag: "latest"
+  tag: "a4ceaf660bcce4b30995825d931037d7cd8fd57f"
 
 replicaCount: 1
 
