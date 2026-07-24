@@ -278,14 +278,15 @@ All three methods are available to QA engineers through either the ArgoCD UI or 
 ## Running Locally
 
 ```bash
-# Run the app
+# Run the app (from repo root)
 cd app
 go run main.go
 
-# Run tests
+# Run tests (from app/)
 go test -v ./...
 
-# Build container
+# Build container (from repo root)
+cd ..
 docker build -t cicd-demo:local .
 
 # Run container
@@ -295,8 +296,11 @@ docker run -p 8080:8080 cicd-demo:local
 curl http://localhost:8080/
 curl http://localhost:8080/healthz
 
-# Lint Helm chart
+# Lint Helm chart (from repo root)
 helm lint helm/
+
+# Render and validate manifests (from repo root)
+helm template cicd-demo helm/ -f helm/values.yaml -f helm/values-production.yaml
 
 # Test Kyverno policies against rendered manifests
 helm template cicd-demo helm/ -f helm/values-production.yaml | \
