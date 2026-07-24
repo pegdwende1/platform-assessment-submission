@@ -123,12 +123,17 @@ Admission control as code. Policies are tested in CI before reaching the cluster
 ## Repository Structure
 
 ```
-cicd-demo/
+platform-engineering-assessment/
+├── .github/
+│   └── workflows/
+│       ├── ci.yaml                   # Full CI/CD pipeline with approval gates
+│       ├── promote.yaml              # Manual promotion (hotfix/re-deploy)
+│       └── k8s-manifest-scan.yaml    # Helm lint + kubeconform + Kyverno + Checkov
 ├── app/                              # Application source code
 │   ├── main.go                       # API server
 │   ├── main_test.go                  # Unit tests
-│   └── go.mod                        # Go module
-├── Dockerfile                        # Multi-stage build (distroless)
+│   ├── go.mod                        # Go module
+│   └── .golangci.yml                 # Linter configuration
 ├── helm/                             # Helm chart for deployment
 │   ├── Chart.yaml
 │   ├── values.yaml                   # Base values
@@ -152,11 +157,14 @@ cicd-demo/
 ├── argocd/                           # ArgoCD Application definitions
 │   ├── app-staging.yaml              # Auto-sync enabled
 │   └── app-production.yaml           # Manual sync (QA triggers)
-└── .github/
-    └── workflows/
-        ├── ci.yaml                   # Full CI/CD pipeline with approval gates
-        ├── promote.yaml              # Manual promotion (hotfix/re-deploy)
-        └── k8s-manifest-scan.yaml    # Helm lint + kubeconform + Kyverno + Checkov
+├── platform-proposal/                # Written proposal documents
+│   ├── release_engineering_proposal.md
+│   ├── platform_strategy_proposal.md
+│   ├── acquisition_integration_strategy.md
+│   └── team_adoption_operations.md
+├── Dockerfile                        # Multi-stage build (distroless)
+├── assessment_brief.md               # Original assessment requirements
+└── README.md
 ```
 
 ---
