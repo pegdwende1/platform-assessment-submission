@@ -22,7 +22,7 @@ type HealthResponse struct {
 	Status string `json:"status"`
 }
 
-func infoHandler(w http.ResponseWriter, r *http.Request) {
+func infoHandler(w http.ResponseWriter, _ *http.Request) {
 	host, _ := os.Hostname()
 	resp := InfoResponse{
 		Service:   "cicd-demo",
@@ -31,13 +31,13 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 		Host:      host,
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
+func healthHandler(w http.ResponseWriter, _ *http.Request) {
 	resp := HealthResponse{Status: "healthy"}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }
 
 func setupRoutes() *http.ServeMux {
