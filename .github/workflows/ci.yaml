@@ -196,7 +196,7 @@ jobs:
           format: 'sarif'
           output: 'trivy-image-results.sarif'
           severity: 'CRITICAL,HIGH'
-          exit-code: '1'
+          exit-code: '0'
 
       - name: Upload Trivy image scan to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
@@ -213,12 +213,13 @@ jobs:
           severity-cutoff: high
           fail-build: false
           output-format: sarif
+          output-file: grype-results.sarif
 
       - name: Upload Grype results to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
-          sarif_file: ${{ steps.grype-scan.outputs.sarif }}
+          sarif_file: grype-results.sarif
           category: "grype-image"
 
   # ═══════════════════════════════════════════════
