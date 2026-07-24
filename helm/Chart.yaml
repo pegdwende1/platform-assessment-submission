@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cicd-demo
+description: A simple Go API demonstrating CI/CD with Kubernetes
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

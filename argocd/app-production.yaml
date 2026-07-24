@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cicd-demo-production
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: releases
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: releases-alerts
+    notifications.argoproj.io/subscribe.on-health-degraded.slack: releases-alerts
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/bernadin/cicd-demo
+    targetRevision: main
+    path: helm
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-production.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cicd-demo-production
+
+  # Production requires manual sync (QA or engineer triggers via UI)
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+    # No 'automated' block = manual sync only
