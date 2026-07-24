@@ -3,16 +3,8 @@ name: Kubernetes Manifest & Policy Validation
 on:
   push:
     branches: [main]
-    paths:
-      - 'helm/**'
-      - 'kyverno/**'
-      - 'argocd/**'
   pull_request:
     branches: [main]
-    paths:
-      - 'helm/**'
-      - 'kyverno/**'
-      - 'argocd/**'
 
 jobs:
   # ═══════════════════════════════════════════════
