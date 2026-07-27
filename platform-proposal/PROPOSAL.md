@@ -522,10 +522,13 @@ graph TB
         Chat[Slack Notifications]
     end
 
+    subgraph "CI Pipeline"
+        GHA[GitHub Actions]
+    end
+
     subgraph "GitOps Control Plane"
         ArgoCD[ArgoCD]
         ArgoRollouts[Argo Rollouts]
-        ImageUpdater[Image Updater]
     end
 
     subgraph "Policy & Security"
@@ -544,14 +547,16 @@ graph TB
         Grafana[Grafana]
     end
 
+    GHA -->|Update values + sign image| ArgoCD
     UI --> ArgoCD
     ArgoCD --> StagingNS
     ArgoCD --> ProdNS
     ArgoRollouts --> ProdNS
     ArgoRollouts --> Prometheus
     Prometheus --> Grafana
+    Kyverno --> StagingNS
     Kyverno --> ProdNS
-    ImageUpdater --> ArgoCD
+    Cosign --> GHA
 ```
 
 ### Cadence Tiers
