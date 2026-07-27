@@ -1,6 +1,6 @@
 # Staging environment overrides
 image:
-  tag: "15b4e73451d02cdeff4364e36aa55fca5e843d91"
+  tag: "62f8872dd99f065d3c428d3103b11300e51897c2"
 
 replicaCount: 1
 
