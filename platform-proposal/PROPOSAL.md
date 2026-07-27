@@ -2,7 +2,7 @@
 
 **Author:** Bernadin Pegdwende  
 **Date:** July 2026  
-**Repository:** [github.com/pegdwende1/platform-engineering-assessment](https://github.com/pegdwende1/platform-engineering-assessment)
+**Repository:** [github.com/pegdwende1/platform-assessment-submission](https://github.com/pegdwende1/platform-assessment-submission)
 
 ---
 
