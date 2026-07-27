@@ -18,6 +18,8 @@ This document presents my approach to building a release engineering platform fo
 
 **Key assumption:** The assessment doesn't specify a runtime platform, so I've chosen Kubernetes as the implementation example because it offers the richest ecosystem for progressive delivery, policy enforcement, and GitOps. However, the principles (declarative deployments, progressive rollouts, auditable releases, self-service) apply equally to ECS, serverless, or VM-based environments. Where my recommendations would differ for non-K8s environments, I note that.
 
+**Accompanying demonstration:** The repository implements the Phase 1 foundation described in this proposal — GitOps-based promotion through environments, image signing with Cosign, progressive delivery via Argo Rollouts, dual container scanning, SBOM generation, and policy enforcement with Kyverno. The CI/CD pipeline and Helm chart are working code, not scaffolding.
+
 ---
 
 ## 1. Current State Assessment
@@ -455,7 +457,11 @@ Senior engineers prefer the existing process. It's familiar and has worked for y
 
 **Principle:** Accept debt that is bounded, understood, and has a retirement plan. Reject debt that compounds silently or creates safety risks.
 
-### Measuring Success
+---
+
+## 15. Measuring Success
+
+Every initiative needs clear criteria for determining whether it worked. These metrics would guide decisions throughout:
 
 | Category | Key Metrics | Target (12 months) |
 |----------|-------------|---------------------|
@@ -464,11 +470,18 @@ Senior engineers prefer the existing process. It's familiar and has worked for y
 | **Business** | Feature delivery speed, customer-impacting deploy incidents | Measurable reduction in time-to-customer |
 | **Adoption** | Services on platform, teams self-serving, platform NPS | > 80% coverage, > 70% self-service, positive NPS |
 
-**How I'd use metrics:** Baseline before changing anything. Share monthly with all engineering. Course-correct based on data — if adoption stalls, the platform isn't solving real problems.
+### How I'd Use These Metrics
+
+1. **Baseline first** — measure everything before changing anything. Without a before, "improvement" is just a feeling.
+2. **Monthly review** — share metrics transparently with all engineering. This builds accountability and demonstrates progress.
+3. **Course-correct based on data** — if adoption stalls after 6 months, the platform isn't solving real problems. Fix the platform, not the people.
+4. **Retire vanity metrics** — if a metric doesn't drive a decision, stop measuring it.
 
 ---
 
-## 15. Architecture Diagrams
+## 16. Architecture Diagrams
+
+> **Note:** Diagrams below use [Mermaid](https://mermaid.js.org/) syntax. They render natively on GitHub and in any Mermaid-compatible viewer.
 
 ### High-Level Flow (Platform-Agnostic)
 
@@ -572,5 +585,6 @@ graph LR
 | Acquisition integration | Phased (observe → bridge → converge → consolidate), never break running apps |
 | Team building | Graduated contribution, mentorship through pairing, progressive ownership |
 | Adoption without bottleneck | Earn adoption via value; self-service by design; vacation test |
+| Measuring success | DORA metrics + operational + business + adoption; baseline first, course-correct on data |
 
 The approach is deliberately incremental. Each phase delivers standalone value. The platform succeeds when teams choose to use it because it's genuinely better than what they had before.
