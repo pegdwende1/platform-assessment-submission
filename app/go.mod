@@ -1,3 +1,3 @@
 module github.com/bernadin/cicd-demo
 
-go 1.22
+go 1.24
