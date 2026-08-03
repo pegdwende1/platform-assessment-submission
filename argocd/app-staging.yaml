@@ -10,7 +10,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/bernadin/cicd-demo
+    repoURL: https://github.com/pegdwende1/platform-assessment-submission
     targetRevision: main
     path: helm
     helm:
